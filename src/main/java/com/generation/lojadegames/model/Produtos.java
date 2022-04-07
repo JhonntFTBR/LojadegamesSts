@@ -1,9 +1,8 @@
 package com.generation.lojadegames.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,49 +11,44 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "tb_produtos")
+@Entity                                             		
+@Table(name = "tb_produtos")	
 public class Produtos {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
-
-	@NotBlank(message = "O atributo nome é obrigatório e não pode estar vazio")
-	@Size(min = 4, max = 50, message = "O atributo nome precisa ter entre 4 a 50 caracteres")
+	
+	@NotBlank(message = "Nome é obrigatório")                                       										
 	private String nome;
-
-	@NotBlank(message = "O atributo descrição é obrigatório e não pode estar vazio")
-	@Size(min = 10, max = 250, message = "O atributo descrição precisa ter entre 10 a 250 caracteres")
+	
+	@Size(max=500)
 	private String descricao;
-
-	@NotBlank(message = "O atributo plataforma é obrigatório e não pode estar vazio")
-	@Size(min = 2, max = 25, message = "O atributo plataforma precisa ter entre 2 e 25 caracteres")
-	private String plataforma;
-
-	@Size(min = 1, max = 4, message = "O atributo quantidade precisa ter entre 1 a 4 caracteres")
+	
+	@NotBlank(message = "O Console é obrigatório")
+	private String console;
+	
 	private int quantidade;
-
-	@Column(name = "data_de_lancamento")
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dataDeLancamento;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@NotNull(message = "O atributo preço é obrigatório")
-	@Positive(message = "O preço deve ser maior do que 0")
-	private BigDecimal preco;
-
+	
+	
+	@JsonFormat(pattern = "yyyy-MM-dd") // essa anotação é para deixar a data no formato correto
+    private LocalDate dataLancamento;
+	
+	
+	@NotNull(message = "O preço é obrigatório")
+	
+	private double preco;
+	
 	private String foto;
 
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
+
 
 	public Long getId() {
 		return id;
@@ -80,12 +74,12 @@ public class Produtos {
 		this.descricao = descricao;
 	}
 
-	public String getPlataforma() {
-		return plataforma;
+	public String getConsole() {
+		return console;
 	}
 
-	public void setPlataforma(String plataforma) {
-		this.plataforma = plataforma;
+	public void setConsole(String console) {
+		this.console = console;
 	}
 
 	public int getQuantidade() {
@@ -96,28 +90,28 @@ public class Produtos {
 		this.quantidade = quantidade;
 	}
 
-	public LocalDate getDataDeLancamento() {
-		return dataDeLancamento;
-	}
-
-	public void setDataDeLancamento(LocalDate dataDeLancamento) {
-		this.dataDeLancamento = dataDeLancamento;
-	}
-
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 
 	public String getFoto() {
-		return foto;
+		return this.foto;
 	}
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public LocalDate getDataLancamento() {
+		return this.dataLancamento;
+	}
+
+	public void setDataLancamento(LocalDate dataLancamento) {
+		this.dataLancamento = dataLancamento;
 	}
 
 	public Categoria getCategoria() {

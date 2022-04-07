@@ -1,6 +1,6 @@
 package com.generation.lojadegames.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,40 +8,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "tb_usuarios")
+@Table (name = "tb_usuario")
 public class Usuario {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "O atributo usuario é obrigatório e não pode estar vazio")
-	@Size(min = 6, max = 20, message = "O atributo usuario precisa ter entre 6 e 20 caracteres")
-	private String usuario;
-	
-	@NotBlank(message = "O atributo nome é obrigatório e não pode estar vazio")
-	@Size(min = 10, max = 45, message = "O atributo nome precisa ter entre 10 e 45 caracteres")
+	@NotBlank
 	private String nome;
 	
-	@NotBlank(message = "O atributo senha é obrigatório e não pode estar vazio")
-	@Size(min = 6, max = 60, message = "O atributo senha precisa ter entre 6 a 60 caracteres")
+	@NotBlank
+	@Email
+	private String usuario;
+	
+	@NotBlank
+	@Size(min = 8, message = "A senha precisa ter no mínimo 8 caracteres")
 	private String senha;
 	
 	private String foto;
 	
-	@Column(name = "data_de_nascimento")
+	@Column(name = "data_nascimento")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date data;
-	
-	/*@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("usuario")
-	private List<Produto> produto;*/
+	@NotNull(message = "A data de nascimento é obrigatória")
+	private LocalDate datadenasc;
 
 	public Long getId() {
 		return id;
@@ -51,20 +48,20 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {
@@ -83,12 +80,14 @@ public class Usuario {
 		this.foto = foto;
 	}
 
-	public Date getData() {
-		return data;
+	public LocalDate getDatadenasc() {
+		return datadenasc;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDatadenasc(LocalDate datadenasc) {
+		this.datadenasc = datadenasc;
 	}
+
+	
 	
 }
